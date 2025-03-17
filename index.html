@@ -23,18 +23,17 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            filter: blur(10px);
+            filter: blur(15px) contrast(0.5) brightness(0.5);
         }
         .overlay {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            max-width: 300px;
-            padding: 10px;
+            max-width: 600px;
+            padding: 20px;
             background: rgba(0, 0, 0, 0.8);
-            border: 1px solid white;
-            text-align: left;
-            font-size: 16px;
+            border: 2px solid white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -49,7 +48,8 @@
             "To see is to be seen.",
             "Who is watching whom?",
             "Surveillance is power.",
-            "You are being observed."
+            "You are being observed.",
+            "Your presence is recorded."
         ];
         
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -58,15 +58,16 @@
                 blurEffect();
                 toggleVisibility();
                 cycleText();
+                moveTextBox();
             })
             .catch(error => console.error("Error accessing webcam:", error));
 
         function blurEffect() {
-            video.style.filter = "blur(10px)";
+            video.style.filter = "blur(15px) contrast(0.5) brightness(0.5)";
         }
 
         function clearEffect() {
-            video.style.filter = "none";
+            video.style.filter = "blur(5px) contrast(1) brightness(1)";
         }
 
         function toggleVisibility() {
@@ -83,6 +84,14 @@
                 const randomText = texts[Math.floor(Math.random() * texts.length)];
                 textBox.innerText = randomText;
             }, 5000);
+        }
+        
+        function moveTextBox() {
+            setInterval(() => {
+                const x = Math.random() * (window.innerWidth - textBox.offsetWidth);
+                const y = Math.random() * (window.innerHeight - textBox.offsetHeight);
+                textBox.style.transform = `translate(${x}px, ${y}px)`;
+            }, 3000);
         }
     </script>
 </body>
