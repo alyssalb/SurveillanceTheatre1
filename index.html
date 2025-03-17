@@ -71,7 +71,7 @@
         }
 
         function toggleVisibility() {
-            const randomDelay = Math.random() * (10000 - 3000) + 3000;
+            const randomDelay = Math.random() * (15000 - 7000) + 7000; // Less frequent clarity
             setTimeout(() => {
                 clearEffect();
                 setTimeout(blurEffect, 1000 + Math.random() * 1000);
@@ -83,16 +83,25 @@
             setInterval(() => {
                 const randomText = texts[Math.floor(Math.random() * texts.length)];
                 textBox.innerText = randomText;
-            }, 5000);
+            }, 8000); // Less frequent text change
         }
         
         function moveTextBox() {
+            const positions = [
+                { top: "20px", left: "20px" }, // Top left
+                { top: "50%", left: "50%", transform: "translate(-50%, -50%)" }, // Center
+                { top: "65%", left: "40%", transform: "translate(-50%, -50%)" } // Lower left of center
+            ];
+            let index = 0;
             setInterval(() => {
-                const x = Math.random() * (window.innerWidth - textBox.offsetWidth);
-                const y = Math.random() * (window.innerHeight - textBox.offsetHeight);
-                textBox.style.transform = `translate(${x}px, ${y}px)`;
-            }, 3000);
+                const pos = positions[index];
+                textBox.style.top = pos.top;
+                textBox.style.left = pos.left;
+                textBox.style.transform = pos.transform || "none";
+                index = (index + 1) % positions.length;
+            }, 10000); // Less frequent jumps
         }
     </script>
 </body>
 </html>
+
